@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Te Amo Animado</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #1a1a2e; /* Un fondo oscuro para que el degradado resalte */
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden; /* Evita barras de desplazamiento si el contenido se mueve */
+        }
+
+        .animated-text {
+            font-size: 8em; /* Tamaño grande para el texto */
+            font-weight: bold;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, #ff6b6b, #ffe66d, #6bccf2, #a6ffcb); /* Degradado inicial */
+            -webkit-background-clip: text; /* Recorta el fondo al texto */
+            -webkit-text-fill-color: transparent; /* Hace el texto transparente para ver el fondo */
+            background-size: 400% 400%; /* Tamaño del degradado para la animación */
+            animation: gradientAnimation 10s ease infinite; /* Animación del degradado */
+            position: relative;
+            letter-spacing: 5px; /* Espaciado entre letras */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Sombra para mejor legibilidad */
+        }
+
+        /* Animación de latido para el texto */
+        .animated-text::before {
+            content: 'MAMAME EL WEBO'; /* Duplica el contenido para la animación de latido */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff6b6b, #ffe66d, #6bccf2, #a6ffcb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 400% 400%;
+            animation: 
+                gradientAnimation 10s ease infinite,
+                heartbeat 1.5s ease-in-out infinite alternate; /* Animación de latido */
+            filter: blur(5px); /* Un ligero desenfoque para el efecto de resplandor */
+            z-index: -1; /* Detrás del texto principal */
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1.05);
+                opacity: 1;
+            }
+        }
+
+        /* Efecto de partículas (opcional, para un toque extra) */
+        .particle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: floatAndFade 5s ease-in-out infinite;
+            pointer-events: none; /* No interfiere con el cursor */
+            opacity: 0;
+        }
+
+        @keyframes floatAndFade {
+            0% {
+                transform: translateY(0) translateX(0) scale(0);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            80% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-200px) translateX(var(--x-offset)) scale(0.5);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-text">MAMAME EL WEBO</div>
+
+    <script>
+        // Script para generar partículas aleatorias (opcional)
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            document.body.appendChild(particle);
+
+            const size = Math.random() * 10 + 5; // Tamaño entre 5 y 15px
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${Math.random() * 100}vw`; // Posición horizontal aleatoria
+            particle.style.top = `${Math.random() * 100}vh`; // Posición vertical aleatoria
+            particle.style.animationDelay = `${Math.random() * 2}s`; // Retraso aleatorio
+            particle.style.setProperty('--x-offset', `${(Math.random() - 0.5) * 100}px`); // Desplazamiento X aleatorio
+
+            setTimeout(() => {
+                particle.remove();
+            }, 5000); // Eliminar la partícula después de su animación
+        }
+
+        setInterval(createParticle, 200); // Crear una partícula cada 200ms
+    </script>
+</body>
+</html>
